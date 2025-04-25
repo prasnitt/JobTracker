@@ -47,6 +47,6 @@ async Task SeedDatabase()
             new JobApplication { CompanyName = "Microsoft", Position = "Backend Dev", DateApplied = DateTime.UtcNow, Status = JobStatus.Applied },
             new JobApplication { CompanyName = "Netflix", Position = "Frontend Dev", DateApplied = DateTime.UtcNow, Status = JobStatus.Interview },
         });
-    context.SaveChanges();
+    await context.SaveChangesAsync();
 
 }
