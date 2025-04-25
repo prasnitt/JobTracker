@@ -42,6 +42,6 @@ public class JobApplicationsController : ControllerBase
         var application = JobApplication.FromDto(applicationDto);
 
         var addedApplication = await _repository.AddAsync(application);
-        return CreatedAtAction(nameof(GetById), new { id = addedApplication.Id }, addedApplication);
+        return CreatedAtAction(nameof(GetById), new { id = addedApplication.Id }, addedApplication.ToDto());
     }
 }
