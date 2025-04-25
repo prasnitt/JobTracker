@@ -21,7 +21,7 @@ public class JobApplication
     public static JobApplication FromDto(CreateJobApplicationDto dto)
     {
         if (dto == null)
-            throw new ArgumentNullException(nameof(dto));
+            throw new ArgumentException(nameof(dto));
 
         JobStatus parsedStatus;
 

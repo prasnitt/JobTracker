@@ -39,9 +39,15 @@ public class JobApplicationsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var application = JobApplication.FromDto(applicationDto);
-
-        var addedApplication = await _repository.AddAsync(application);
-        return CreatedAtAction(nameof(GetById), new { id = addedApplication.Id }, addedApplication.ToDto());
+        try
+        {
+            var application = JobApplication.FromDto(applicationDto);
+            var addedApplication = await _repository.AddAsync(application);
+            return CreatedAtAction(nameof(GetById), new { id = addedApplication.Id }, addedApplication.ToDto());
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }

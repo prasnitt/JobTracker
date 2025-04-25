@@ -97,7 +97,7 @@ public class JobApplicationsControllerTests
     }
 
     [Test]
-    public void Add_InvalidStatus_ThrowsArgumentException()
+    public async Task Add_InvalidStatus_ReturnBadStatus()
     {
         // Arrange
         var createDto = new CreateJobApplicationDto
@@ -108,8 +108,10 @@ public class JobApplicationsControllerTests
             DateApplied = DateTime.Now
         };
 
-        // Act & Assert
-        Assert.ThrowsAsync<ArgumentException>(async () => await _controller.Add(createDto));
+        // Act
+        var result = await _controller.Add(createDto);
+        // Assert
+        Assert.IsInstanceOf<BadRequestObjectResult>(result);
     }
 
     [Test]
