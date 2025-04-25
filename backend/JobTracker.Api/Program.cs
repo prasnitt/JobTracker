@@ -1,5 +1,6 @@
 using JobTracker.Api.Data;
 using JobTracker.Api.Interfaces;
+using JobTracker.Api.Models;
 using JobTracker.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,4 +26,27 @@ app.UseSwaggerUI();
 
 app.UseAuthorization();
 app.MapControllers();
+
+// Seed the database if it doesn't exist
+if (!File.Exists("jobtracker.db"))
+{
+    await SeedDatabase();
+}
 app.Run();
+
+
+async Task SeedDatabase()
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.EnsureCreated();
+
+    // Optional seeding
+    context.JobApplications.AddRange(new[]
+    {
+            new JobApplication { CompanyName = "Microsoft", Position = "Backend Dev", DateApplied = DateTime.UtcNow, Status = JobStatus.Applied },
+            new JobApplication { CompanyName = "Netflix", Position = "Frontend Dev", DateApplied = DateTime.UtcNow, Status = JobStatus.Interview },
+        });
+    context.SaveChanges();
+
+}
