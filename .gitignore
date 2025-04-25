@@ -53,3 +53,6 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 /backend/.vs/
+/backend/JobTracker.Api/jobtracker.db-shm
+/backend/JobTracker.Api/jobtracker.db-wal
+/backend/JobTracker.Api/jobtracker.db
