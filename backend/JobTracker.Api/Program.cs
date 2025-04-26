@@ -47,6 +47,13 @@ app.UseHealthChecks("/healthy");
 app.UseAuthorization();
 app.MapControllers();
 
+// Redirect root to Swagger UI
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/swagger");
+    return Task.CompletedTask;
+});
+
 // Seed the database if it doesn't exist
 if (!File.Exists("jobtracker.db"))
 {
