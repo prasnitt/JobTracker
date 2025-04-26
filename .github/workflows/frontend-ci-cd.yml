@@ -43,7 +43,7 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-    name: Deploay to Azure static web app
+    name: Deploy to Azure static web app
     steps:
       - uses: actions/checkout@v3
         with:
