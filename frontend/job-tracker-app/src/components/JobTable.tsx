@@ -15,7 +15,7 @@ export default function JobTable({ applications, onJobEdit }: JobTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  const totalPages = Math.ceil(applications.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(applications.length / itemsPerPage));
 
   const paginatedApps = applications.slice(
     (currentPage - 1) * itemsPerPage,
