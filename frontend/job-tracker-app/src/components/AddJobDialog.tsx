@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { addApplication } from "@/api/jobApi"; 
 import { JobStatus } from "@/types/JobApplication";
+import { toast } from "sonner"
 
 interface AddJobDialogProps {
   onJobAdded: () => void; // callback after successful add
@@ -32,9 +33,12 @@ export function AddJobDialog({ onJobAdded }: AddJobDialogProps) {
       setPosition("");
       setStatus("Applied");
       setError("");
+      toast.success("Job added successfully!");
       onJobAdded(); // tell parent to reload the table
     } catch {
-      setError("Failed to add job. Please try again.");
+        const errorMessage = "Failed to add job. Please try again.";
+        setError(errorMessage);
+        toast.error(errorMessage);
     }
   };
 
