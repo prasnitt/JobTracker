@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { addApplication } from "@/api/jobApi"; 
 import { JobStatus } from "@/types/JobApplication";
+import { StatusSelect } from "@/components/StatusSelect";
 import { toast } from "sonner"
+import { Plus } from "lucide-react"
 
 interface AddJobDialogProps {
   onJobAdded: () => void; // callback after successful add
@@ -25,6 +26,7 @@ export function AddJobDialog({ onJobAdded }: AddJobDialogProps) {
     }
     try {
       await addApplication({
+        id: 0, // assuming the API will assign an ID
         companyName,
         position,
         status
@@ -45,11 +47,14 @@ export function AddJobDialog({ onJobAdded }: AddJobDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add Job</Button>
+        <Button> <Plus/>Add Job</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add New Job</DialogTitle>
+          <DialogDescription>
+            Fill in the details of the job application you want to add. All fields are required.
+          </DialogDescription>
         </DialogHeader>
 
         {error && <div className="text-red-500 mb-2">{error}</div>}
@@ -67,17 +72,7 @@ export function AddJobDialog({ onJobAdded }: AddJobDialogProps) {
 
           <div className="grid gap-2">
             <Label>Status</Label>
-            <Select value={status} onValueChange={(value) => setStatus(value as JobStatus)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Applied">Applied</SelectItem>
-                <SelectItem value="Interview">Interview</SelectItem>
-                <SelectItem value="Offer">Offer</SelectItem>
-                <SelectItem value="Rejected">Rejected</SelectItem>
-              </SelectContent>
-            </Select>
+            <StatusSelect value={status} onChange={setStatus} />
           </div>
 
           <Button onClick={handleSubmit}>Add Job</Button>

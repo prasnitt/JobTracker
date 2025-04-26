@@ -1,13 +1,14 @@
 import { JobApplication } from "@/types/JobApplication";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import {EditJobDialog} from "@/components/EditJobDialog";
 import { formatDate } from "@/utils/dateUtils";
 
 interface JobTableProps {
   applications: JobApplication[];
+  onJobEdit: () => void;
 }
 
-export default function JobTable({ applications }: JobTableProps) {
+export default function JobTable({ applications, onJobEdit }: JobTableProps) {
   return (
     <div className="rounded-md border">
       <Table>
@@ -30,9 +31,7 @@ export default function JobTable({ applications }: JobTableProps) {
               <TableCell>{app.status}</TableCell>
               <TableCell>{formatDate(app.dateApplied)}</TableCell>
               <TableCell>
-                <Button variant="outline" size="sm">
-                  Edit
-                </Button>
+                <EditJobDialog application={app} onStatusUpdated={onJobEdit} />
               </TableCell>
             </TableRow>
           ))}
