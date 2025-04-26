@@ -10,15 +10,15 @@ on:
   pull_request:
     branches:
       - main
-
+env:
+  AZURE_WEBAPP_NAME: JobTrackerApi20250427112534
+  AZURE_WEBAPP_PACKAGE_PATH: ./JobTracker.Api/publish
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 8.0.x
+  WORKING_DIRECTORY: ./backend/JobTracker.Api
 jobs:
   build:
     name: Build and Test
-    env:
-      AZURE_WEBAPP_PACKAGE_PATH: ./JobTracker.Api/publish
-      CONFIGURATION: Release
-      DOTNET_CORE_VERSION: 8.0.x
-      WORKING_DIRECTORY: ./backend/JobTracker.Api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -43,3 +43,20 @@ jobs:
         with:
           name: webapp
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  deploy:
+    name: Deploy to Azure webapp
+    runs-on: windows-latest
+    needs: build
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v4
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.JobTrackerApi20250427112534_4BE5 }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
