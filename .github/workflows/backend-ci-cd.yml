@@ -13,6 +13,12 @@ on:
 
 jobs:
   build:
+    name: Build and Test
+    env:
+      AZURE_WEBAPP_PACKAGE_PATH: JobTracker.Api\publish
+      CONFIGURATION: Release
+      DOTNET_CORE_VERSION: 8.0.x
+      WORKING_DIRECTORY: backend\JobTracker.Api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,13 +26,20 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
       - name: Restore dependencies
         working-directory: ./backend
         run: dotnet restore JobTracker.sln
       - name: Build
         working-directory: ./backend
-        run: dotnet build JobTracker.sln --no-restore
+        run: dotnet build JobTracker.sln --configuration ${{ env.CONFIGURATION }} --no-restore
       - name: Test
         working-directory: ./backend
         run: dotnet test JobTracker.sln --no-build --verbosity normal
+      - name: Publish
+        run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
