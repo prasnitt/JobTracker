@@ -21,7 +21,7 @@ export const getApplicationById = async (id: number): Promise<JobApplication> =>
 };
 
 export const updateApplicationStatus = async (id: number, status: JobStatus): Promise<JobApplication> => {
-  const res = await api.patch(`/${id}`, null, {
+  const res = await api.put(`/${id}/status`, null, {
     params: { status }
   });
   return res.data;
