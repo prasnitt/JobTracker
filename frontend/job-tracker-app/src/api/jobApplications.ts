@@ -2,7 +2,7 @@ import axios from 'axios';
 import { JobApplication } from '../types/JobApplication';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL + '/applications'
+  baseURL: import.meta.env.VITE_API_BASE_URL + '/api/JobApplications'
 });
 
 export const getAllApplications = async (): Promise<JobApplication[]> => {
