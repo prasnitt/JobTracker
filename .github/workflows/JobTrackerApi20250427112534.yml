@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Web App JobTrackerApi20250427112
 on:
   push:
     branches:
-    - 11-deploy-api-to-cloud
+    - main
 env:
   AZURE_WEBAPP_NAME: JobTrackerApi20250427112534
   AZURE_WEBAPP_PACKAGE_PATH: JobTracker.Api\publish

@@ -15,10 +15,10 @@ jobs:
   build:
     name: Build and Test
     env:
-      AZURE_WEBAPP_PACKAGE_PATH: JobTracker.Api\publish
+      AZURE_WEBAPP_PACKAGE_PATH: ./JobTracker.Api/publish
       CONFIGURATION: Release
       DOTNET_CORE_VERSION: 8.0.x
-      WORKING_DIRECTORY: backend\JobTracker.Api
+      WORKING_DIRECTORY: ./backend/JobTracker.Api
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
