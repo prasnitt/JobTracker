@@ -31,4 +31,27 @@ describe('formatDate', () => {
         const output = formatDate(input);
         expect(output).toBe("Invalid Date");
     });
+
+
+    it('should return today\'s date in the desired format if dateString is undefined', () => {
+        const today = new Date();
+        const expectedOutput = today.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        });
+        const output = formatDate(undefined);
+        expect(output).toBe(expectedOutput);
+    });
+    
+    it('should return today\'s date in the desired format if dateString is null', () => {
+        const today = new Date();
+        const expectedOutput = today.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        });
+        const output = formatDate(null as unknown as string);
+        expect(output).toBe(expectedOutput);
+    });
 });

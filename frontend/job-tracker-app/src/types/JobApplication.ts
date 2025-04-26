@@ -5,5 +5,5 @@ export interface JobApplication {
   companyName: string;
   position: string;
   status: JobStatus;
-  dateApplied: string;
+  dateApplied?: string;
 }
