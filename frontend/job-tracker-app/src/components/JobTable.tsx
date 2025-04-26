@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { JobApplication } from "@/types/JobApplication";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { EditJobDialog } from "@/components/EditJobDialog";
@@ -16,6 +16,15 @@ export default function JobTable({ applications, onJobEdit }: JobTableProps) {
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
   const totalPages = Math.max(1, Math.ceil(applications.length / itemsPerPage));
+
+  // Adjust currentPage if applications.length changes
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages); // Adjust to the last valid page
+    } else if (applications.length === 0) {
+      setCurrentPage(1); // Reset to the first page if no applications
+    }
+  }, [applications.length, totalPages, currentPage]);
 
   const paginatedApps = applications.slice(
     (currentPage - 1) * itemsPerPage,
