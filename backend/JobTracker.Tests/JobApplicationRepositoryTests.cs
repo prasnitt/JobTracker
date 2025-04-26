@@ -89,4 +89,58 @@ public class JobApplicationRepositoryTests
         Assert.That(allJobs.Any(j => j.CompanyName == "Tesla"), Is.True);
         Assert.That(allJobs.Any(j => j.CompanyName == "SpaceX"), Is.True);
     }
+
+    [Test]
+    public async Task UpdateStatusAsync_ShouldUpdateApplicationStatus()
+    {
+        using var context = new AppDbContext(_dbOptions);
+        var repo = new JobApplicationRepository(context);
+
+        var job = new JobApplication
+        {
+            CompanyName = "Netflix",
+            Position = "Data Scientist",
+            DateApplied = DateTime.UtcNow,
+            Status = JobStatus.Applied
+        };
+
+        var added = await repo.AddAsync(job);
+
+        var updated = await repo.UpdateStatusAsync(added.Id, "Interview");
+
+        Assert.That(updated.Status, Is.EqualTo(JobStatus.Interview));
+    }
+
+    [Test]
+    public async Task UpdateStatusAsync_ReturnNull_WhenApplicationNotFound()
+    {
+        using var context = new AppDbContext(_dbOptions);
+        var repo = new JobApplicationRepository(context);
+
+        var updated = await repo.UpdateStatusAsync(999, "Interview");
+
+        Assert.That(updated, Is.EqualTo(null));
+    }
+
+    [Test]
+    public async Task UpdateStatusAsync_ShouldThrowException_WhenInvalidStatus()
+    {
+        using var context = new AppDbContext(_dbOptions);
+        var repo = new JobApplicationRepository(context);
+
+        var job = new JobApplication
+        {
+            CompanyName = "Facebook",
+            Position = "Product Manager",
+            DateApplied = DateTime.UtcNow,
+            Status = JobStatus.Applied
+        };
+
+        var added = await repo.AddAsync(job);
+
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+        {
+            await repo.UpdateStatusAsync(added.Id, "InvalidStatus");
+        });
+    }
 }
