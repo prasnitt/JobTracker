@@ -1,6 +1,7 @@
 import { JobApplication } from "@/types/JobApplication";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { formatDate } from "@/utils/dateUtils";
 
 interface JobTableProps {
   applications: JobApplication[];
@@ -27,7 +28,7 @@ export default function JobTable({ applications }: JobTableProps) {
               <TableCell>{app.companyName}</TableCell>
               <TableCell>{app.position}</TableCell>
               <TableCell>{app.status}</TableCell>
-              <TableCell>{new Date(app.dateApplied).toLocaleDateString()}</TableCell>
+              <TableCell>{formatDate(app.dateApplied)}</TableCell>
               <TableCell>
                 <Button variant="outline" size="sm">
                   Edit
