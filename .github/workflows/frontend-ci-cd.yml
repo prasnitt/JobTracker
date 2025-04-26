@@ -29,6 +29,10 @@ jobs:
         working-directory: ./frontend/job-tracker-app
         run: npm run lint
 
+      - name: Run tests
+        working-directory: ./frontend/job-tracker-app
+        run: npm run test
+
       - name: 🛠️ Build the app
         working-directory: ./frontend/job-tracker-app
         run: npm run build
