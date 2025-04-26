@@ -23,6 +23,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHealthChecks();
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -41,9 +43,16 @@ app.UseCors("ConfiguredCors");
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
+app.UseHealthChecks("/healthy");
 app.UseAuthorization();
 app.MapControllers();
+
+// Redirect root to Swagger UI
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/swagger");
+    return Task.CompletedTask;
+});
 
 // Seed the database if it doesn't exist
 if (!File.Exists("jobtracker.db"))
