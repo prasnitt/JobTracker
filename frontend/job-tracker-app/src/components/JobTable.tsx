@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { JobApplication } from "@/types/JobApplication";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import {EditJobDialog} from "@/components/EditJobDialog";
+import { EditJobDialog } from "@/components/EditJobDialog";
 import { formatDate } from "@/utils/dateUtils";
+import { Button } from "@/components/ui/button";
 
 interface JobTableProps {
   applications: JobApplication[];
@@ -9,6 +11,28 @@ interface JobTableProps {
 }
 
 export default function JobTable({ applications, onJobEdit }: JobTableProps) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const totalPages = Math.ceil(applications.length / itemsPerPage);
+
+  const paginatedApps = applications.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -23,7 +47,7 @@ export default function JobTable({ applications, onJobEdit }: JobTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {applications.map((app) => (
+          {paginatedApps.map((app) => (
             <TableRow key={app.id}>
               <TableCell>{app.id}</TableCell>
               <TableCell>{app.companyName}</TableCell>
@@ -37,6 +61,19 @@ export default function JobTable({ applications, onJobEdit }: JobTableProps) {
           ))}
         </TableBody>
       </Table>
+
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-between p-4">
+        <Button variant="outline" size="sm" onClick={handlePrevious} disabled={currentPage === 1}>
+          Previous
+        </Button>
+        <span className="text-sm text-muted-foreground">
+          Page {currentPage} of {totalPages}
+        </span>
+        <Button variant="outline" size="sm" onClick={handleNext} disabled={currentPage === totalPages}>
+          Next
+        </Button>
+      </div>
     </div>
   );
 }
