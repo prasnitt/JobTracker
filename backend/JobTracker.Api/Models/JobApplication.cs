@@ -10,6 +10,8 @@ public enum JobStatus
     Rejected
 }
 
+
+
 public class JobApplication
 {
     public int Id { get; set; }
@@ -18,24 +20,31 @@ public class JobApplication
     public JobStatus Status { get; set; } = JobStatus.Applied;
     public DateTime DateApplied { get; set; }
 
+
+    public static JobStatus ParseStatus(string? status)
+    {
+        if (string.IsNullOrEmpty(status))
+            throw new ArgumentException("Status cannot be null or empty", nameof(status));
+
+        if (!Enum.TryParse<JobStatus>(status, true, out var parsedStatus))
+        {
+            // Throw exception invalid status
+            throw new ArgumentException($"Invalid status: {status}", nameof(status));
+        }
+
+        return parsedStatus;
+    }
+
     public static JobApplication FromDto(CreateJobApplicationDto dto)
     {
         if (dto == null)
             throw new ArgumentException(nameof(dto));
 
-        JobStatus parsedStatus;
-
-        if (!Enum.TryParse<JobStatus>(dto.Status ?? string.Empty, true, out parsedStatus))
-        {
-            // Throw exception invalid status
-            throw new ArgumentException($"Invalid status: {dto.Status}", nameof(dto.Status));
-        }
-
         return new JobApplication
         {
             CompanyName = dto.CompanyName,
             Position = dto.Position,
-            Status = parsedStatus,
+            Status = ParseStatus(dto.Status),
             DateApplied = dto.DateApplied ?? DateTime.Now,
         };
     }

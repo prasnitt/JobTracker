@@ -31,6 +31,18 @@ public class JobApplicationRepository : IJobApplicationRepository
         return app;
     }
 
+    public async Task<JobApplication> UpdateStatusAsync(int id, string status)
+    {
+        var application = await GetByIdAsync(id);
+        if (application == null)
+            return null;
+
+        application.Status = JobApplication.ParseStatus(status);
+        _context.JobApplications.Update(application);
+        await SaveChangesAsync();
+        return application;
+    }
+
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();

@@ -133,4 +133,48 @@ public class JobApplicationsControllerTests
         // Assert
         Assert.IsInstanceOf<BadRequestObjectResult>(result);
     }
+
+    [Test]
+    public async Task UpdateStatus_ValidIdAndStatus_ReturnsOk()
+    {
+        // Arrange
+        var application = new JobApplication { Id = 1, CompanyName = "Company A", Position = "Developer", Status = JobStatus.Applied };
+
+        _repositoryMock.Setup(repo => repo.UpdateStatusAsync(1, "Applied")).ReturnsAsync(application);
+
+        // Act
+        var result = await _controller.UpdateStatus(1, "Applied");
+
+        // Assert
+        var okResult = result as OkObjectResult;
+        Assert.IsNotNull(okResult);
+        var applicationDto = okResult.Value as JobApplicationDto;
+        Assert.AreEqual("Applied", applicationDto.Status);
+    }
+
+    [Test]
+    public async Task UpdateStatus_InvalidId_ReturnsNotFound()
+    {
+        // Arrange
+        _repositoryMock.Setup(repo => repo.UpdateStatusAsync(1, "Applied")).ReturnsAsync((JobApplication)null);
+
+        // Act
+        var result = await _controller.UpdateStatus(1, "Applied");
+
+        // Assert
+        Assert.IsInstanceOf<NotFoundResult>(result);
+    }
+
+    [Test]
+    public async Task UpdateStatus_InvalidModelState_ReturnsBadRequest()
+    {
+        // Arrange
+        _repositoryMock.Setup(repo => repo.UpdateStatusAsync(1, "InvalidStatus")).Throws(new ArgumentException("Invalid status"));
+
+        // Act
+        var result = await _controller.UpdateStatus(1, "InvalidStatus");
+
+        // Assert
+        Assert.IsInstanceOf<BadRequestObjectResult>(result);
+    }
 }

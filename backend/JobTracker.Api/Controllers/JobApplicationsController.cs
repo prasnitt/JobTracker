@@ -50,4 +50,25 @@ public class JobApplicationsController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpPut("{id}/status")]
+    public async Task<IActionResult> UpdateStatus(int id, string status)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        try
+        {
+            var application = await _repository.UpdateStatusAsync(id, status);
+            if (application == null)
+                return NotFound();
+
+            return Ok(application.ToDto());
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
 }
