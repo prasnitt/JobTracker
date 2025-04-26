@@ -3,6 +3,7 @@ import { getAllApplications } from "@/api/jobApi";
 import { JobApplication } from "@/types/JobApplication";
 import JobTable from "@/components/JobTable";
 import { AddJobDialog } from "@/components/AddJobDialog";
+import { toast } from "sonner"
 
 function Home() {
   const [applications, setApplications] = useState<JobApplication[]>([]);
@@ -14,6 +15,7 @@ function Home() {
       const data = await getAllApplications();
       setApplications(data);
     } catch (error) {
+      toast.error("Failed to fetch Job applications. Please try again.");
       console.error("Error fetching applications", error);
     } finally {
       setLoading(false);

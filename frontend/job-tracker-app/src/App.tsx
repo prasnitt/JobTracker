@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <Home />
-      <Toaster richColors position='bottom-center' />
+      <Toaster richColors />
     </>
   )
 }
