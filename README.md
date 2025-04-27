@@ -74,16 +74,30 @@ The app is built with a modern tech stack and deployed using CI/CD pipelines.
 ### Frontend APP UI page 
 ![Frontend APP UI page](screenshots/frontend-app-home-page.png)  
 
+### Job Application Action dialogs
+
+| Action            |    Dialog Screenshot                            |
+|-------------------|-------------------------------------------------|
+| Add               | ![Add Job Application Dialog](screenshots/add-job-dialog.png)  |
+| Edit              | ![Edit Job Application Dialog](screenshots/edit-job-dialog.png)  |
+| Delete            | ![Delete Job Application Dialog](screenshots/delete-job-dialog.png)  |
+
 ## Future Improvements
 
 ### Backend:
+
 1. Add Authentication & Authorization for APIs
 2. Use a better SQL server (e.g., MSSQL, Postgres)
 3. Use Terraform for infrastructure as code (IaC)
 4. Explore additional improvements as needed
 
 ### Frontend:
+
 1. Get a better design for the entire app
 2. Make it responsive (for both Desktop and Mobile)
+3. Add Unit tests for frontend components
 
 
+### Known Issues:
+
+1. If you select the number of records more than 5, after any update (add, edit or delete), it reverts to 5 items per table.
