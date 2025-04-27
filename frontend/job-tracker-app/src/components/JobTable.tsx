@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import { JobApplication } from "@/types/JobApplication";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { EditJobDialog } from "@/components/EditJobDialog";
+import { DeleteJobDialog } from "@/components/DeleteJobDialog";
 import { formatDate } from "@/utils/dateUtils";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface JobTableProps {
   applications: JobApplication[];
-  onJobEdit: () => void;
+  onJobUpdate: () => void;
 }
 
-export default function JobTable({ applications, onJobEdit }: JobTableProps) {
+export default function JobTable({ applications, onJobUpdate }: JobTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
@@ -70,7 +71,10 @@ export default function JobTable({ applications, onJobEdit }: JobTableProps) {
               <TableCell>{app.status}</TableCell>
               <TableCell>{formatDate(app.dateApplied)}</TableCell>
               <TableCell>
-                <EditJobDialog application={app} onStatusUpdated={onJobEdit} />
+              <div className="flex items-center gap-2">
+                <EditJobDialog application={app} onStatusUpdated={onJobUpdate} />
+                <DeleteJobDialog application={app} onDeleted={onJobUpdate} />
+              </div>
               </TableCell>
             </TableRow>
           ))}

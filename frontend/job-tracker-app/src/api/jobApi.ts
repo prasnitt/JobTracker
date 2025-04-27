@@ -20,6 +20,11 @@ export const getApplicationById = async (id: number): Promise<JobApplication> =>
   return res.data;
 };
 
+export const deleteApplicationById = async (id: number): Promise<boolean> => {
+  const res = await api.delete(`/${id}`);
+  return res.data;
+};
+
 export const updateApplicationStatus = async (id: number, status: JobStatus): Promise<JobApplication> => {
   const res = await api.put(`/${id}/status`, null, {
     params: { status }

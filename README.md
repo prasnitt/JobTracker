@@ -3,7 +3,7 @@ Track and manage all the jobs you’ve applied to in one place. This app helps y
 
 ## Overview
 Job Application Tracker is a web application that allows users to:
-- Add, update, and delete(TBD)  job applications.
+- Add, update, and delete job applications.
 - Track the status of applications (e.g., Applied, Interview, Offer, Rejected).
 - View a dashboard of all job applications.
 
@@ -19,8 +19,9 @@ The app is built with a modern tech stack and deployed using CI/CD pipelines.
 
 ### Backend API:
 - C# .NET 8
-- SQLite
+- EF Core for SQLite
 - Swagger UI for API documentation
+- NUnit test, using MOQ & EF In-memory DB
 
 ### Frontend App:
 - React with Vite

@@ -177,4 +177,30 @@ public class JobApplicationsControllerTests
         // Assert
         Assert.IsInstanceOf<BadRequestObjectResult>(result);
     }
+
+    [Test]
+    public async Task DeleteById_ExistingId_ReturnsOk()
+    {
+        // Arrange
+        _repositoryMock.Setup(repo => repo.DeleteAsync(1)).ReturnsAsync(true);
+
+        // Act
+        var result = await _controller.DeleteById(1);
+
+        // Assert
+        Assert.IsInstanceOf<OkResult>(result);
+    }
+
+    [Test]
+    public async Task DeleteById_NonExistingId_ReturnsNotFound()
+    {
+        // Arrange
+        _repositoryMock.Setup(repo => repo.DeleteAsync(1)).ReturnsAsync(false);
+
+        // Act
+        var result = await _controller.DeleteById(1);
+
+        // Assert
+        Assert.IsInstanceOf<NotFoundResult>(result);
+    }
 }

@@ -31,6 +31,17 @@ public class JobApplicationRepository : IJobApplicationRepository
         return app;
     }
 
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var application = await GetByIdAsync(id);
+        if (application == null)
+            return false;
+
+        _context.JobApplications.Remove(application);
+        await SaveChangesAsync();
+        return true;
+    }
+
     public async Task<JobApplication> UpdateStatusAsync(int id, string status)
     {
         var application = await GetByIdAsync(id);

@@ -1,30 +1,27 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { StatusSelect } from "@/components/StatusSelect";
 import { JobApplication } from "@/types/JobApplication";
-import { updateApplicationStatus } from "@/api/jobApi"; 
-import { Label } from "@/components/ui/label";
+import { deleteApplicationById } from "@/api/jobApi"; 
 import { toast } from "sonner"
-import { Pencil } from "lucide-react"
+import { Trash2 } from "lucide-react"
 
-interface EditJobDialogProps {
+interface DeleteJobDialogProps {
   application: JobApplication;
-  onStatusUpdated: () => void;
+  onDeleted: () => void;
 }
 
-export function EditJobDialog({ application, onStatusUpdated }: EditJobDialogProps) {
-  const [status, setStatus] = useState(application.status);
+export function DeleteJobDialog({ application, onDeleted }: DeleteJobDialogProps) {
   const [open, setOpen] = useState(false);
 
   const handleSubmit = async () => {
     try {
-      await updateApplicationStatus(application.id, status);
-      toast.success("Job status updated successfully!");
-      onStatusUpdated();
+      await deleteApplicationById(application.id);
+      toast.success("Job application deleted successfully!");
+      onDeleted();
       setOpen(false);
     } catch (error) {
-      const errorMessage = "Failed to update job status. Please try again.";
+      const errorMessage = "Failed to delete job application. Please try again.";
       toast.error(errorMessage);
       console.error(errorMessage, error);
     }
@@ -33,13 +30,13 @@ export function EditJobDialog({ application, onStatusUpdated }: EditJobDialogPro
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" size="sm"> <Pencil /> </Button>
+        <Button variant="destructive" size="sm"> <Trash2 /></Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Job Status</DialogTitle>
+          <DialogTitle>Delete Job application?</DialogTitle>
           <DialogDescription>
-            Update the status of your job application.
+            Are you sure you want to delete this application? This operation can not be reverted.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
@@ -47,15 +44,12 @@ export function EditJobDialog({ application, onStatusUpdated }: EditJobDialogPro
             <div><strong>ID:</strong> {application.id}</div>
             <div><strong>Company:</strong> {application.companyName}</div>
             <div><strong>Position:</strong> {application.position}</div>
-          </div>
-
-          <div className="space-y-4">
-            <Label>Status</Label>      <StatusSelect value={status} onChange={setStatus} />
+            <div><strong>Status:</strong> {application.status}</div>
           </div>
         </div>
 
         <DialogFooter>
-          <Button onClick={handleSubmit}>Save</Button>
+          <Button onClick={handleSubmit} variant="destructive">Delete Job Application</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
