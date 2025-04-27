@@ -6,13 +6,13 @@ import react from '@vitejs/plugin-react'
 import { execSync } from "child_process";
 
 // Get the Git version using the desired command
-let gitVersion = "unknown"; // Fallback value in case of an error
+let gitVersion:string = "unknown"; // Fallback value in case of an error
 try {
   gitVersion = execSync("git describe --tags --long --dirty --always")
     .toString()
     .trim();
 } catch (error) {
-  console.error("Failed to retrieve Git version:", error.message);
+  console.error("Failed to retrieve Git version:", error);
 }
 
 // https://vite.dev/config/
