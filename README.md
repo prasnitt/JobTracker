@@ -10,10 +10,15 @@ Job Application Tracker is a web application that allows users to:
 The app is built with a modern tech stack and deployed using CI/CD pipelines.
 
 ## CI/CD
+
 | Service           | Build Status                                                                 |
 |-------------------|-----------------------------------------------------------------------------|
 | Frontend App CI/CD | [![Frontend App CI/CD](https://github.com/prasnitt/JobTracker/actions/workflows/frontend-ci-cd.yml/badge.svg?branch=main)](https://github.com/prasnitt/JobTracker/actions/workflows/frontend-ci-cd.yml) |
 | Backend API CI/CD  | [![Backend API CI/CD](https://github.com/prasnitt/JobTracker/actions/workflows/backend-ci-cd.yml/badge.svg?branch=main)](https://github.com/prasnitt/JobTracker/actions/workflows/backend-ci-cd.yml) |
+
+### CI/CD Flow
+
+![CI/CD Flow Diagram](screenshots/JobTracker-CI-CD.drawio.png)
 
 ## Technologies Used
 
@@ -27,6 +32,7 @@ The app is built with a modern tech stack and deployed using CI/CD pipelines.
 - React with Vite
 - Tailwind CSS
 - [ShadCN Library](https://ui.shadcn.com/) for components
+- Basic unit test using `Vitest`
 
 ### CI/CD and Infrastructure:
 - GitHub Actions
