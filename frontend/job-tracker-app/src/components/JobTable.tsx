@@ -14,7 +14,10 @@ interface JobTableProps {
 
 export default function JobTable({ applications, onJobUpdate }: JobTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(() => {
+    const saved = localStorage.getItem("itemsPerPage");
+    return saved ? Number(saved) : 5;
+  });
 
   const totalPages = Math.max(1, Math.ceil(applications.length / itemsPerPage));
 
@@ -45,10 +48,11 @@ export default function JobTable({ applications, onJobUpdate }: JobTableProps) {
   };
 
   const handleItemsPerPageChange = (value: string) => {
-    setItemsPerPage(Number(value));
-    setCurrentPage(1); // Reset to first page when items per page changes
+    const newItemsPerPage = Number(value);
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+    localStorage.setItem("itemsPerPage", newItemsPerPage.toString());
   };
-
   return (
     <div className="rounded-md border overflow-x-auto">
       <Table className="min-w-full">
