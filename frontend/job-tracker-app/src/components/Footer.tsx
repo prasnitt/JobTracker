@@ -1,9 +1,11 @@
 import { FaLinkedin } from "react-icons/fa";
 import { FaSquareGithub } from "react-icons/fa6";
+import { getAppVersion } from "@/utils/version";
 
-const version = "1.0.0-abc123"; // Replace later with dynamic version if needed
+
 
 export function Footer() {
+  const version = getAppVersion();
   return (
     <footer className="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow-sm md:flex md:items-center md:justify-between md:p-6">
       <span className="text-sm text-gray-500 sm:text-center">
