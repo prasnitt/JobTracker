@@ -3,7 +3,8 @@ import { getAllApplications } from "@/api/jobApi";
 import { JobApplication } from "@/types/JobApplication";
 import JobTable from "@/components/JobTable";
 import { AddJobDialog } from "@/components/AddJobDialog";
-import { toast } from "sonner"
+import { Footer } from "@/components/Footer";
+import { toast } from "sonner";
 
 function Home() {
   const [applications, setApplications] = useState<JobApplication[]>([]);
@@ -29,12 +30,18 @@ function Home() {
   if (loading) return <div className="p-4">Loading...</div>;
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Job Tracker App</h1>
-        <AddJobDialog onJobAdded={fetchApplications} />
-      </div>
-      <JobTable applications={applications}  onJobEdit={fetchApplications}/>
+    <div className="flex flex-col min-h-screen">
+      {/* Content */}
+      <main className="flex-grow p-4">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Job Tracker App</h1>
+          <AddJobDialog onJobAdded={fetchApplications} />
+        </div>
+        <JobTable applications={applications} onJobEdit={fetchApplications} />
+      </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
