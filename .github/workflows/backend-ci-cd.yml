@@ -10,9 +10,15 @@ on:
   pull_request:
     branches:
       - main
-
+env:
+  AZURE_WEBAPP_NAME: JobTrackerApi20250427112534
+  AZURE_WEBAPP_PACKAGE_PATH: ./JobTracker.Api/publish
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 8.0.x
+  WORKING_DIRECTORY: ./backend/JobTracker.Api
 jobs:
   build:
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,13 +26,38 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
       - name: Restore dependencies
         working-directory: ./backend
         run: dotnet restore JobTracker.sln
       - name: Build
         working-directory: ./backend
-        run: dotnet build JobTracker.sln --no-restore
+        run: dotnet build JobTracker.sln --configuration ${{ env.CONFIGURATION }} --no-restore
       - name: Test
         working-directory: ./backend
         run: dotnet test JobTracker.sln --no-build --verbosity normal
+      - name: Publish
+        run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  deploy:
+    name: Deploy to Azure webapp
+    runs-on: windows-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v4
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.JobTrackerApi20250427112534_4BE5 }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
