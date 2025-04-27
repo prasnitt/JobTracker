@@ -66,6 +66,22 @@ public class JobApplicationsController : ControllerBase
     }
 
     /// <summary>
+    ///  Delete a Job Application by Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
+
+    public async Task<IActionResult> DeleteById(int id)
+    {
+        var deleted = await _repository.DeleteAsync(id);
+        if (!deleted)
+            return NotFound();
+        return Ok();
+    }
+
+
+    /// <summary>
     /// Update an existing Job Application's status
     /// </summary>
     /// <param name="id"></param>

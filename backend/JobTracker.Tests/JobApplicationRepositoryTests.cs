@@ -143,4 +143,37 @@ public class JobApplicationRepositoryTests
             await repo.UpdateStatusAsync(added.Id, "InvalidStatus");
         });
     }
+
+    [Test]
+    public async Task DeleteAsync_ShouldDeleteApplication()
+    {
+        using var context = new AppDbContext(_dbOptions);
+        var repo = new JobApplicationRepository(context);
+
+        var job = new JobApplication
+        {
+            CompanyName = "Apple",
+            Position = "iOS Developer",
+            DateApplied = DateTime.UtcNow,
+            Status = JobStatus.Applied
+        };
+
+        var added = await repo.AddAsync(job);
+
+        var deleted = await repo.DeleteAsync(added.Id);
+
+        Assert.That(deleted, Is.True);
+        Assert.That(await repo.GetByIdAsync(added.Id), Is.Null);
+    }
+
+    [Test]
+    public async Task DeleteAsync_ShouldReturnFalse_WhenApplicationNotFound()
+    {
+        using var context = new AppDbContext(_dbOptions);
+        var repo = new JobApplicationRepository(context);
+
+        var deleted = await repo.DeleteAsync(999);
+
+        Assert.That(deleted, Is.False);
+    }
 }
