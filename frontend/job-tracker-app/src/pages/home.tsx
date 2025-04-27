@@ -29,7 +29,7 @@ function Home() {
   if (loading) return <div className="p-4">Loading...</div>;
 
   return (
-    <div className="p-4">
+    <div className="p-4 sm:p-6 md:p-8">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Job Tracker App</h1>
         <AddJobDialog onJobAdded={fetchApplications} />
