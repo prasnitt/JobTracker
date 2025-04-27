@@ -95,7 +95,7 @@ The app is built with a modern tech stack and deployed using CI/CD pipelines.
 
 1. Get a better design for the entire app
 2. Make it responsive (for both Desktop and Mobile)
-3. Add Unit test for frontend components
+3. Add Unit tests for frontend components
 
 
 ### Known Issues:
