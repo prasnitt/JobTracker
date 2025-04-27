@@ -73,7 +73,7 @@ The app is built with a modern tech stack and deployed using CI/CD pipelines.
 ![Swagger UI page for API documentation](screenshots/Swagger-UI-For-API-doc.png)  
 
 ### Frontend APP UI page 
-![Frontend APP UI page](screenshots/fronend-app-home-page.png)  
+![Frontend APP UI page](screenshots/frontend-app-home-page.png)  
 
 ## Future Improvements
 
