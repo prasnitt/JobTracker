@@ -59,13 +59,11 @@ The app is built with a modern tech stack and deployed using CI/CD pipelines.
    ```bash
    npm install
    ```
-3. Configure environment variables:
-   - Add your Confluent Cloud API keys and AWS credentials to a `.env` file.
-4. Start the application:
+3. Start the application:
    ```bash
    npm run dev
    ```
-5. You will be able to access the frontend app at the specific local endpoint (e.g., `http://localhost:5173/`).
+4. You will be able to access the frontend app at the specific local endpoint (e.g., `http://localhost:5173/`).
 
 ## Screenshots  
 
