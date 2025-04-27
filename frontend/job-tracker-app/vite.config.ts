@@ -17,13 +17,13 @@ try {
 const buildNumber :string = process.env.BUILD_NUMBER || "local";
 
 // Combine version and Git hash
-const gitVersion = `${version}-build.${buildNumber}`;
+const appVersion = `${version}-build.${buildNumber}`;
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   define: {
-    __APP_VERSION__: JSON.stringify(gitVersion), // Inject the version as a global constant
+    __APP_VERSION__: JSON.stringify(appVersion), // Inject the version as a global constant
   },
   resolve: {
     alias: {
