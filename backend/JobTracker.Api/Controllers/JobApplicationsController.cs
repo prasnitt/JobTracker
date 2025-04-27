@@ -15,6 +15,10 @@ public class JobApplicationsController : ControllerBase
         _repository = repository;
     }
 
+    /// <summary>
+    ///  Get All Job Applications
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -24,6 +28,11 @@ public class JobApplicationsController : ControllerBase
         return Ok(applicationDtos);
     }
 
+    /// <summary>
+    /// Get Job Application by Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -33,6 +42,11 @@ public class JobApplicationsController : ControllerBase
         return Ok(application.ToDto());
     }
 
+    /// <summary>
+    /// Add a new Job Application
+    /// </summary>
+    /// <param name="applicationDto"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Add(CreateJobApplicationDto applicationDto)
     {
@@ -51,6 +65,12 @@ public class JobApplicationsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Update an existing Job Application's status
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
     [HttpPut("{id}/status")]
     public async Task<IActionResult> UpdateStatus(int id, string status)
     {
