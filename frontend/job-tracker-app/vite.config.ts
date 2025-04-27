@@ -3,7 +3,6 @@ import tailwindcss from "@tailwindcss/vite"
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import fs from "fs";
-import { execSync } from "child_process";
 
 // Read the version from package.json
 let version :string = "1.0.0"; // Default fallback version
@@ -14,22 +13,17 @@ try {
   console.error("Failed to read version from package.json:", error);
 }
 
-// Append the Git commit short hash
-let gitHash:string = "unknown";
-try {
-  gitHash = execSync("git rev-parse --short HEAD").toString().trim();
-} catch (error) {
-  console.error("Failed to retrieve Git commit hash:", error);
-}
+// Use the build number from the environment variable
+const buildNumber :string = process.env.BUILD_NUMBER || "local";
 
 // Combine version and Git hash
-const gitVersion = `${version}-${gitHash}`;
+const appVersion = `${version}-build.${buildNumber}`;
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   define: {
-    __APP_VERSION__: JSON.stringify(gitVersion), // Inject the version as a global constant
+    __APP_VERSION__: JSON.stringify(appVersion), // Inject the version as a global constant
   },
   resolve: {
     alias: {
