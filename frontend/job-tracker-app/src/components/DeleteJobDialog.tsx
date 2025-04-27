@@ -21,7 +21,7 @@ export function DeleteJobDialog({ application, onDeleted }: DeleteJobDialogProps
       onDeleted();
       setOpen(false);
     } catch (error) {
-      const errorMessage = "Failed to deleted job application. Please try again.";
+      const errorMessage = "Failed to delete job application. Please try again.";
       toast.error(errorMessage);
       console.error(errorMessage, error);
     }
