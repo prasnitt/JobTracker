@@ -100,4 +100,4 @@ The app is built with a modern tech stack and deployed using CI/CD pipelines.
 
 ### Known Issues:
 
-1. If you select the number of records more than 5, after any update (add, edit or delete), it default back to 5 items per table.
+1. If you select the number of records more than 5, after any update (add, edit or delete), it reverts to 5 items per table.
