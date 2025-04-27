@@ -37,7 +37,7 @@ function Home() {
           <h1 className="text-2xl font-bold">Job Tracker App</h1>
           <AddJobDialog onJobAdded={fetchApplications} />
         </div>
-        <JobTable applications={applications} onJobEdit={fetchApplications} />
+        <JobTable applications={applications} onJobUpdate={fetchApplications} />
       </main>
 
       {/* Footer */}
