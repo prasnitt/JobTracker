@@ -6,7 +6,7 @@
 
 
 
-TODO
+## Additional Information
 
-* Refer to ReadMe of frontend as well
-* using https://ui.shadcn.com/docs/installation/vite
+* Refer to the README of the frontend for detailed setup instructions.
+* Follow the guide at [ShadCN UI Installation](https://ui.shadcn.com/docs/installation/vite) for integrating the UI components with Vite.
