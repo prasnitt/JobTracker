@@ -67,7 +67,13 @@ The app is built with a modern tech stack and deployed using CI/CD pipelines.
    ```
 5. You will be able to access the frontend app at the specific local endpoint (e.g., `http://localhost:5173/`).
 
-TODO: Screenshots
+## Screenshots  
+
+### Swagger UI page for API documentation
+![Swagger UI page for API documentation](screenshots/Swagger-UI-For-API-doc.png)  
+
+### Frontend APP UI page 
+![Frontend APP UI page](screenshots/fronend-app-home-page.png)  
 
 ## Future Improvements
 
