@@ -102,8 +102,3 @@ The app is built with a modern tech stack and deployed using CI/CD pipelines.
 1. Get a better design for the entire app
 2. Make it responsive (for both Desktop and Mobile)
 3. Add Unit tests for frontend components
-
-
-### Known Issues:
-
-1. If you select the number of records more than 5, after any update (add, edit or delete), it reverts to 5 items per table.
